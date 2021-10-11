@@ -1,0 +1,81 @@
+import { Router } from "@vaadin/router";
+import { state } from "../../state";
+const imgFondo = require("url:../../../client/img/fondopage.png");
+
+customElements.define(
+  "name-page",
+  class extends HTMLElement {
+    constructor() {
+      super();
+    }
+    connectedCallback() {
+      this.render();
+      const form = this.querySelector(".form-name");
+      form.addEventListener("submit", (e: any) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const currentState = state.getState();
+        if (currentState.gameroomsId) {
+          //Si la persona ya tiene el roomId es porque esta entrando a un room existente
+          state.setMyName(name).then(() => {
+            //Setea el nombre y accede al room
+            state.accessToRoom().then(() => {
+              const cs = state.getState();
+              //Si acessToRoom me da algun error redirecciono a pantalla /error
+              if (cs.error) {
+                Router.go("/error");
+              } else {
+                //Se agrega el participante al room y se redirecciona a /instructions
+                state.addParticipant(() => {
+                  Router.go("/instructions");
+                });
+              }
+            });
+          });
+        } else {
+          //Si no tiene el roomId en el state se crea un room nuevo y se redirecciona a /code
+          state.setMyName(name).then(() => {
+            state.askNewRoom(() => {
+              state.accessToRoom().then(() => {
+                Router.go("/code");
+              });
+            });
+          });
+        }
+      });
+    }
+    render() {
+      this.innerHTML = `
+        <section class="content-home">
+          <text-component tag="h1">Piedra Papel o Tijera</text-component> 
+          <form-component value="Empezar" label="Tu nombre" name="name" class="form-name"></form-component> 
+          <div class="container-hand"> 
+              <hand-component jugada="tijera"></hand-component>
+              <hand-component jugada="piedra"></hand-component>
+              <hand-component jugada="papel"></hand-component>
+          </div>
+        </section>
+        `;
+
+      const style = document.createElement("style");
+      style.innerHTML = `
+      .content-home{
+        background-image:url(${imgFondo});
+        height: 100vh;
+      }
+      .container-hand{
+          position:fixed;
+          bottom:0;
+          left:0;
+          right:0;
+          margin:0 auto;
+          width:320px;
+          justify-content:space-between;
+          display:flex;
+          
+      }
+      `;
+      this.appendChild(style);
+    }
+  }
+);
