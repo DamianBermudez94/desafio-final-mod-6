@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 const port = process.env.PORT || 3003;
 
-app.use(express.static("client"));
+app.use(express.static("dist"));
 
 const userCollection = firestore.collection("users");
 const gameRoomsCollection = firestore.collection("gamerooms");
