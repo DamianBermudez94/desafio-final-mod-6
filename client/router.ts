@@ -1,7 +1,7 @@
 import { Router } from "@vaadin/router";
 
 //Pages
-/*import "./pages/home";
+import "./pages/home";
 import "./pages/name";
 import "./pages/insert-code";
 import "./pages/code";
@@ -9,7 +9,7 @@ import "./pages/instructions";
 import "./pages/waiting";
 import "./pages/game";
 import "./pages/result";
-import "./pages/error";*/
+import "./pages/error";
 
 const router = new Router(document.querySelector(".root"));
 router.setRoutes([
