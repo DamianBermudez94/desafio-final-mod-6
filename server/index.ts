@@ -10,6 +10,7 @@ import * as cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 const port = process.env.PORT || 3003;
 
 app.use(express.static("dist"));
