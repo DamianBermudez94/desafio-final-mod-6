@@ -18,7 +18,9 @@ const userCollection = firestore.collection("users");
 const gameRoomsCollection = firestore.collection("gamerooms");
 console.log("Holaaaaaaa!!",gameRoomsCollection);
 
-
+app.listen(port,()=>{
+  console.log(`iniciado en http://localhost:${port}`);
+})
 
 //Agrega el user si no existe, sino solo devuelve el id
 app.post("/signup", (req, res) => {
@@ -169,6 +171,3 @@ app.put("/gamerooms/:rtdbId", (req, res) => {
     });
 });
 
-app.listen(port,()=>{
-    console.log(`iniciado en http://localhost:${port}`);
-})
