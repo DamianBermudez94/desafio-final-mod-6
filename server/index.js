@@ -12,6 +12,9 @@ app.use(express.static("dist"));
 var userCollection = db_1.firestore.collection("users");
 var gameRoomsCollection = db_1.firestore.collection("gamerooms");
 console.log("Holaaaaaaa!!", gameRoomsCollection);
+app.listen(port, function () {
+    console.log("iniciado en http://localhost:" + port);
+});
 //Agrega el user si no existe, sino solo devuelve el id
 app.post("/signup", function (req, res) {
     var name = req.body.name;
@@ -148,7 +151,4 @@ app.put("/gamerooms/:rtdbId", function (req, res) {
         .then(function () {
         res.json({ update: true });
     });
-});
-app.listen(port, function () {
-    console.log("iniciado en http://localhost:" + port);
 });
