@@ -1,7 +1,6 @@
 {
   "name": "desafio-final-mod-6",
   "version": "1.0.0",
-  
   "license": "MIT",
   "dependencies": {
     "@types/node": "^16.10.2",
